@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading" *ngIf="zipcodeArr">
+      <h3 class="panel-title">5-day forecast for {{ zipcodeArr.city.name }}</h3>
+    </div>
+    <ng-container *ngIf="zipcodeArr">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let forecast of zipcodeArr.list">
+          {{ forecast.dt | dayName }}: {{ forecast.weather[0].main }} - Min:
+          {{ forecast.temp.max }} - Max: {{ forecast.temp.min }}
+
+          <ng-container [ngSwitch]="forecast.weather[0].main">
+            <img
+              class="icon"
+              src="https://www.angulartraining.com/images/weather/sun.png"
+              *ngSwitchCase="'Clear'"
+            />
+            <img
+              class="icon"
+              src="https://www.angulartraining.com/images/weather/clouds.png"
+              *ngSwitchCase="'Clouds'"
+            />
+            <img
+              class="icon"
+              src="https://www.angulartraining.com/images/weather/rain.png"
+              *ngSwitchCase="'Rain'"
+            />
+            <img
+              class="icon"
+              src="https://www.angulartraining.com/images/weather/snow.png"
+              *ngSwitchCase="'Snow'"
+            />
+            <img
+              class="icon"
+              src="https://www.angulartraining.com/images/weather/sun.png"
+              *ngSwitchDefault
+            />
+          </ng-container>
+
+          <img
+            class="icon"
+            src="https://www.angulartraining.com/images/weather/rain.png"
+          />
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+  <button class="btn btn-success" tabindex="0" id="mainPageBtn" routerLink="/">
+    &lt; Back to main page
+  </button>
+</div>

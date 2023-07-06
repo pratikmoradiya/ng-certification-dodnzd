@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <div class="well">
+    <h2>Enter a zipcode:</h2>
+    <input
+      minlength="5"
+      maxlength="6"
+      [(ngModel)]="zipcode"
+      class="form-control"
+      placeholder="Zipcode"
+      type="text"
+      id="addLocation"
+    />
+    <br />
+    <button
+      class="btn btn-primary"
+      id="addLocationBtn"
+      (click)="addLocation()"
+      [disabled]="!zipcode || zipcode == ''"
+    >
+      Add location
+    </button>
+  </div>
+  <ng-container *ngIf="zipcodeArr && zipcodeArr.length">
+    <div
+      class="well flex"
+      *ngFor="let record of zipcodeArr; trackBy: trackByMethod; let i = index"
+    >
+      <div>
+        <h3>{{ record.name }} ({{ record.zipcode }})</h3>
+        <h4>Current conditions: {{ record.weather[0].main }}</h4>
+        <h4>Temperatures today:</h4>
+        <p>
+          Current {{ record.main.temp }} - Max {{ record.main.temp_max }} - Min
+          {{ record.main.temp_min }}
+        </p>
+        <p>
+          <a [routerLink]="['forcast', record.zipcode]"
+            >Show 5-day forecast for {{ record.name }}</a
+          >
+        </p>
+      </div>
+      <div>
+        <span class="close" (click)="closeWeatherCard($event, i)">×</span>
+        <ng-container [ngSwitch]="record.weather[0].main">
+          <img
+            src="https://www.angulartraining.com/images/weather/sun.png"
+            *ngSwitchCase="'Clear'"
+          />
+          <img
+            src="https://www.angulartraining.com/images/weather/clouds.png"
+            *ngSwitchCase="'Clouds'"
+          />
+          <img
+            src="https://www.angulartraining.com/images/weather/rain.png"
+            *ngSwitchCase="'Rain'"
+          />
+          <img
+            src="https://www.angulartraining.com/images/weather/snow.png"
+            *ngSwitchCase="'Snow'"
+          />
+          <img
+            src="https://www.angulartraining.com/images/weather/sun.png"
+            *ngSwitchDefault
+          />
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>
